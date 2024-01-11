@@ -29,15 +29,16 @@ export type PayloadType =
   | TodoTitle
   | { id: TodoId, title: TodoTitle }
   | FilterValue
+  | ListOfTodos
 
-export interface actionType {
+export interface ActionType {
   type: TodoActionsType
   payload?: PayloadType
 }
 
 export interface TodoContextType {
   state: StateType
-  dispatch: (action: actionType) => void
+  dispatch: (action: ActionType) => void
   filteredTodos: ListOfTodos
   handleRemove: (id: TodoId) => void
   handleCheck: (id: TodoId) => void

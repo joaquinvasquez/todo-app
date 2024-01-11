@@ -1,13 +1,18 @@
-import { InitialState } from '../context/TodoContext'
-import { type StateType, type actionType } from '../types'
+import { type StateType, type ActionType, type ListOfTodos } from '../types'
 import { TODO_ACTIONS } from './actions'
 
-type reducerType = (state: StateType, action: actionType) => StateType
+type ReducerType = (state: StateType, action: ActionType) => StateType
 
-export const todoReducer: reducerType = (state, action) => {
+export const todoReducer: ReducerType = (state, action) => {
   switch (action.type) {
-    case TODO_ACTIONS.INIT_TODOS:
-      return InitialState
+    case TODO_ACTIONS.INIT_TODOS: {
+      const todosAPI: ListOfTodos = action.payload
+      return {
+        ...state,
+        todos: todosAPI,
+        activeCount: todosAPI.filter((todo) => !todo.completed).length,
+      }
+    }
 
     case TODO_ACTIONS.ADD: {
       const newTodo = {

@@ -9,8 +9,19 @@ const Todos: React.FC = () => {
   const [parent] = useAutoAnimate()
   const { dispatch, filteredTodos } = useContext(TodoContext)
 
+  const getTodos = async (): Promise<void> => {
+    const response = await fetch('http://localhost:3030/todos')
+    return await response.json()
+  }
+
   useEffect(() => {
-    dispatch({ type: 'INIT_TODOS' })
+    getTodos()
+      .then((data) => {
+        dispatch({ type: 'INIT_TODOS', payload: data })
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   }, [])
 
   return (

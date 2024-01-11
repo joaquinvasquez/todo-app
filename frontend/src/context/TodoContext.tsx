@@ -2,7 +2,7 @@ import { useReducer, createContext } from 'react'
 import { TODO_FILTERS } from '../consts'
 import { todoReducer } from '../reducer/todoReducer'
 import {
-  type actionType,
+  type ActionType,
   type TodoId,
   type StateType,
   type FilterValue,
@@ -12,16 +12,10 @@ import {
 
 const TodoContext = createContext<TodoContextType>(null!)
 
-// temporal
-const mockTodos = [
-  { id: '1', title: 'todo 1', completed: false },
-  { id: '2', title: 'todo 2', completed: true },
-  { id: '3', title: 'todo 3', completed: false },
-]
 export const InitialState: StateType = {
-  todos: mockTodos,
+  todos: [],
   filter: TODO_FILTERS.ALL,
-  activeCount: mockTodos.filter((item) => !item.completed).length,
+  activeCount: 0,
 }
 
 interface Props {
@@ -29,9 +23,8 @@ interface Props {
 }
 
 const TodoProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer<
-  (state: StateType, action: actionType) => StateType
-  >(todoReducer, { todos: [], filter: '', activeCount: 0 })
+  const [state, dispatch] = useReducer<(state: StateType, action: ActionType) => StateType>(todoReducer, InitialState)
+
   const filteredTodos = state.todos.filter((item) => {
     if (state.filter === TODO_FILTERS.ACTIVE) return !item.completed
     if (state.filter === TODO_FILTERS.COMPLETED) return item.completed
