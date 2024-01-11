@@ -1,0 +1,26 @@
+{
+  "name": "todo-api",
+  "version": "1.0.0",
+  "description": "API hecha en Node de la app de TODOs (react, typescript)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server.js"
+  },
+  "author": "Joaquin Vasquez",
+  "license": "ISC",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard",
+    "rules": {
+      "comma-dangle": "off"
+    }
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "zod": "3.22.4"
+  }
+}
