@@ -41,10 +41,11 @@ export interface ActionType {
 export interface TodoContextType {
   state: StateType
   filteredTodos: ListOfTodos
+  handleInitTodos: () => void
   handleRemove: (id: TodoId) => void
   handleCheck: (id: TodoId) => void
   onClearCompleted: () => void
   handleFilterChange: (filter: FilterValue) => void
   handleNewTodo: (text: TodoTitle) => void
-  handleEdit: (id: TodoId, title: TodoTitle) => void
+  handleEditTitle: (id: TodoId, title: TodoTitle) => void
 }

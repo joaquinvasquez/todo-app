@@ -11,7 +11,7 @@ interface Props {
 
 const Todo: React.FC<Props> = ({ data, isEditing, setIsEditing }) => {
   const { id, title, completed } = data
-  const { handleRemove, handleCheck, handleEdit } = useContext(TodoContext)
+  const { handleRemove, handleCheck, handleEditTitle } = useContext(TodoContext)
   const [editedTitle, setEditedTitle] = useState<TodoTitle>(title)
   const inputEditTitle = useRef<HTMLInputElement>(null)
 
@@ -20,7 +20,7 @@ const Todo: React.FC<Props> = ({ data, isEditing, setIsEditing }) => {
       setEditedTitle(editedTitle.trim())
 
       if (editedTitle !== title) {
-        handleEdit(id, editedTitle)
+        handleEditTitle(id, editedTitle)
       }
       if (editedTitle === '') {
         handleRemove(id)

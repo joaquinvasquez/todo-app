@@ -11,9 +11,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 // TODO:
-// - Drag and drop ❌
-// - Crear API ✔️(falta mejorarla pero ya responde) y desplegarla
+// - Crear API ✔️
+// - Mejorar API
+// - Mejorar consumo de API en el front
+// - Drag and drop
+// - Modo oscuro y claro
 // - Encontrar la manera de guardar en la base a cada usuario por dispositivo
 // - Arquitectura de la base de datos
-// - Crear y desplegar la base de datos
-// - Modo oscuro y claro
+// - Crear la base de datos
+// - Desplegar API
+// - Desplegar DB
+// - Desplegar Front
