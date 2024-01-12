@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
-import { type TodoTitle } from '../types'
 import TodoContext from '../context/TodoContext'
+import { type TodoTitle } from '../types'
 
 const CreateTodo: React.FC = () => {
   const { handleNewTodo } = useContext(TodoContext)

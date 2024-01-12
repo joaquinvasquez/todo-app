@@ -3,11 +3,11 @@ import { TODO_FILTERS } from '../consts'
 import { todoReducer } from '../reducer/todoReducer'
 import {
   type ActionType,
-  type TodoId,
-  type StateType,
-  type FilterValue,
-  type TodoTitle,
   type TodoContextType,
+  type FilterValue,
+  type StateType,
+  type TodoId,
+  type TodoTitle,
 } from '../types'
 
 const TodoContext = createContext<TodoContextType>(null!)
@@ -23,7 +23,9 @@ interface Props {
 }
 
 const TodoProvider: React.FC<Props> = ({ children }) => {
-  const [state, dispatch] = useReducer<(state: StateType, action: ActionType) => StateType>(todoReducer, InitialState)
+  const [state, dispatch] = useReducer<
+  (state: StateType, action: ActionType) => StateType
+  >(todoReducer, InitialState)
 
   const filteredTodos = state.todos.filter((item) => {
     if (state.filter === TODO_FILTERS.ACTIVE) return !item.completed
@@ -31,11 +33,24 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     return item
   })
 
+  const handleInitTodos = async (): Promise<void> => {
+    dispatch({ type: 'INIT_TODOS' })
+  }
+
+  const handleNewTodo = async (title: TodoTitle): Promise<void> => {
+    dispatch({ type: 'ADD', payload: title })
+  }
+
+  const handleCheck = async (id: TodoId): Promise<void> => {
+    dispatch({ type: 'COMPLETE', payload: id })
+  }
+
+  const handleEdit = async (id: TodoId, title: TodoTitle): Promise<void> => {
+    dispatch({ type: 'UPDATE', payload: { id, title } })
+  }
+
   const handleRemove = (id: TodoId): void => {
     dispatch({ type: 'REMOVE', payload: id })
-  }
-  const handleCheck = (id: TodoId): void => {
-    dispatch({ type: 'COMPLETE', payload: id })
   }
 
   const onClearCompleted = (): void => {
@@ -46,24 +61,16 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     dispatch({ type: 'FILTER_CHANGE', payload: filter })
   }
 
-  const handleNewTodo = (text: TodoTitle): void => {
-    dispatch({ type: 'ADD', payload: text })
-  }
-
-  const handleEdit = (id: TodoId, title: TodoTitle): void => {
-    dispatch({ type: 'UPDATE', payload: { id, title } })
-  }
-
   const data = {
     state,
-    dispatch,
     filteredTodos,
-    handleRemove,
+    handleInitTodos,
+    handleNewTodo,
     handleCheck,
+    handleEdit,
+    handleRemove,
     onClearCompleted,
     handleFilterChange,
-    handleNewTodo,
-    handleEdit,
   }
 
   return <TodoContext.Provider value={data}> {children} </TodoContext.Provider>

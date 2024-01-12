@@ -1,27 +1,16 @@
 import { useEffect, useState, useContext } from 'react'
-import { type TodoId } from '../types'
 import Todo from './Todo'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import TodoContext from '../context/TodoContext'
+import { type TodoId } from '../types'
 
 const Todos: React.FC = () => {
   const [isEditing, setIsEditing] = useState<TodoId>('')
   const [parent] = useAutoAnimate()
-  const { dispatch, filteredTodos } = useContext(TodoContext)
-
-  const getTodos = async (): Promise<void> => {
-    const response = await fetch('http://localhost:3030/todos')
-    return await response.json()
-  }
+  const { handleInitTodos, filteredTodos } = useContext(TodoContext)
 
   useEffect(() => {
-    getTodos()
-      .then((data) => {
-        dispatch({ type: 'INIT_TODOS', payload: data })
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    handleInitTodos()
   }, [])
 
   return (

@@ -6,13 +6,13 @@ export type TodoCompleted = boolean
 // También se puede hacer así:
 // type TodoId = Pick<Todo, 'id'>
 
-export interface Todo {
+export interface TodoType {
   id: TodoId
   title: TodoTitle
   completed: TodoCompleted
 }
 
-export type ListOfTodos = Todo[]
+export type ListOfTodos = TodoType[]
 
 export type FilterValue = (typeof TODO_FILTERS)[keyof typeof TODO_FILTERS]
 
@@ -38,7 +38,6 @@ export interface ActionType {
 
 export interface TodoContextType {
   state: StateType
-  dispatch: (action: ActionType) => void
   filteredTodos: ListOfTodos
   handleRemove: (id: TodoId) => void
   handleCheck: (id: TodoId) => void

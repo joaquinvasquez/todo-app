@@ -1,18 +1,56 @@
-import { type StateType, type ActionType, type ListOfTodos } from '../types'
+import { type StateType, type ActionType } from '../types'
+
 import { TODO_ACTIONS } from './actions'
 
 type ReducerType = (state: StateType, action: ActionType) => StateType
 
+const todos = [
+  {
+    id: 'f7a846d3-4b8a-4a1d-946b-df76ec6bd90f',
+    title: 'todo 1',
+    completed: false,
+    // order: 1,
+  },
+  {
+    id: '7bd56810-31b1-486f-8c3d-4a4120bd8a62',
+    title: 'todo 2',
+    completed: true,
+    // order: 2,
+  },
+  {
+    id: 'e6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d',
+    title: 'todo 3',
+    completed: false,
+    // order: 6,
+  },
+  {
+    id: 'b6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d',
+    title: 'todo 4',
+    completed: false,
+    // order: 3,
+  },
+  {
+    id: 'c6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d',
+    title: 'todo 5',
+    completed: false,
+    // order: 5,
+  },
+  {
+    id: 'd6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d',
+    title: 'todo 6',
+    completed: true,
+    // order: 4,
+  },
+]
+
 export const todoReducer: ReducerType = (state, action) => {
   switch (action.type) {
-    case TODO_ACTIONS.INIT_TODOS: {
-      const todosAPI: ListOfTodos = action.payload
+    case TODO_ACTIONS.INIT_TODOS:
       return {
         ...state,
-        todos: todosAPI,
-        activeCount: todosAPI.filter((todo) => !todo.completed).length,
+        todos,
+        activeCount: todos.filter((todo) => !todo.completed).length,
       }
-    }
 
     case TODO_ACTIONS.ADD: {
       const newTodo = {

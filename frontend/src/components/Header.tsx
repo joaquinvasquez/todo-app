@@ -1,5 +1,5 @@
 import CreateTodo from './CreateTodo'
-import Logo from '../assets/check-mark.svg' 
+import Logo from '../assets/check-mark.svg'
 
 const Header: React.FC = () => {
   return (

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { type TodoTitle, type TodoId, type Todo as TodoType } from '../types'
+
 import TodoContext from '../context/TodoContext'
+import { type TodoType, type TodoId, type TodoTitle } from '../types'
 
 interface Props {
   data: TodoType
