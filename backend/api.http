@@ -22,3 +22,21 @@ Content-Type: application/json
 ### Eliminar un TODO
 DELETE http://localhost:3030/todos/952bbad4-4bf1-4eec-be6d-c27d1414a7ae
 
+### Actualizar TODOs
+# PUT http://localhost:3030/todos
+# Content-Type: application/json
+
+# [
+#   {
+#     "id": "7bd56810-31b1-486f-8c3d-4a4120bd8a62",
+#     "title": "Todo editado",
+#     "completed": false,
+#     "order": 2
+#   },
+#   {
+#     "id": "952bbad4-4bf1-4eec-be6d-c27d1414a7ae",
+#     "title": "Otro todo editado",
+#     "completed": true,
+#     "order": 1
+#   }
+# ]

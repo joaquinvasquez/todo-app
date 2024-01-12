@@ -3,10 +3,11 @@ import z from 'zod'
 const todoSchema = z.object({
   title: z.string().min(1).max(50),
   completed: z.boolean(),
+  order: z.number().int().min(0),
 })
 
 export const validateTodoCreate = (todo) => {
-  return todoSchema.safeParse(todo)
+  return z.object({ title: z.string().min(1).max(50) }).safeParse(todo)
 }
 
 export const validateTodoUpdate = (todo) => {
