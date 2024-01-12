@@ -3,6 +3,7 @@ import { type TODO_FILTERS } from '../consts'
 export type TodoId = string
 export type TodoTitle = string
 export type TodoCompleted = boolean
+export type TodoOrder = number
 // También se puede hacer así:
 // type TodoId = Pick<Todo, 'id'>
 
@@ -10,6 +11,7 @@ export interface TodoType {
   id: TodoId
   title: TodoTitle
   completed: TodoCompleted
+  order: TodoOrder
 }
 
 export type ListOfTodos = TodoType[]

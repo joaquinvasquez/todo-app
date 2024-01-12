@@ -12,6 +12,8 @@ import {
 
 const TodoContext = createContext<TodoContextType>(null!)
 
+const URL = 'http://localhost:3030/todos'
+
 export const InitialState: StateType = {
   todos: [],
   filter: TODO_FILTERS.ALL,
@@ -27,14 +29,23 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   (state: StateType, action: ActionType) => StateType
   >(todoReducer, InitialState)
 
-  const filteredTodos = state.todos.filter((item) => {
-    if (state.filter === TODO_FILTERS.ACTIVE) return !item.completed
-    if (state.filter === TODO_FILTERS.COMPLETED) return item.completed
-    return item
-  })
+  const filteredTodos = state.todos
+    .sort((a, b) => (a.order > b.order ? 1 : -1))
+    .filter((item) => {
+      if (state.filter === TODO_FILTERS.ACTIVE) return !item.completed
+      if (state.filter === TODO_FILTERS.COMPLETED) return item.completed
+      return item
+    })
 
   const handleInitTodos = async (): Promise<void> => {
-    dispatch({ type: 'INIT_TODOS' })
+    fetch(URL)
+      .then(async (res) => await res.json())
+      .then((todos) => {
+        dispatch({ type: 'INIT_TODOS', payload: todos })
+      })
+      .catch((err) => {
+        console.log('ERROR PAAAAAA', err)
+      })
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
