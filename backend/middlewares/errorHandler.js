@@ -4,6 +4,7 @@ export const errorHandler = (err, req, res, next) => {
     success: false,
     status: code,
     message: err.message || 'Internal server error',
-    stack: process.env.NODE_ENV === 'development' ? err.stack : {},
+    stack:
+      process.env.NODE_ENV === 'development' && code === 500 ? err.stack : {},
   })
 }

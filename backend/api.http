@@ -6,8 +6,7 @@ POST http://localhost:3030/todos
 Content-Type: application/json
 
 {
-  "title": "otro todo",
-  "completed": false
+  "title": "otro todo"
 }
 
 ### Actualizar un TODO
@@ -15,7 +14,6 @@ PUT http://localhost:3030/todos/7bd56810-31b1-486f-8c3d-4a4120bd8a62
 Content-Type: application/json
 
 {
-  "title": "Todo editado"
 }
 
 ### Eliminar un TODO
