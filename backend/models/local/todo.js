@@ -1,7 +1,7 @@
 import { createRequire } from 'module'
 import crypto from 'crypto'
 const require = createRequire(import.meta.url)
-const todosData = require('../db.json')
+const todosData = require('./db.json')
 
 let todos = todosData.todos
 
