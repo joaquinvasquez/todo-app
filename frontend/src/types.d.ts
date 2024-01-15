@@ -26,10 +26,7 @@ export interface StateType {
 
 export type TodoActionsType = (typeof TODO_ACTIONS)[keyof typeof TODO_ACTIONS]
 
-export type PayloadType =
-  | TodoType
-  | ListOfTodos
-  | FilterValue
+export type PayloadType = ListOfTodos | FilterValue
 
 export interface ActionType {
   type: TodoActionsType
@@ -38,6 +35,7 @@ export interface ActionType {
 
 export interface TodoContextType {
   state: StateType
+  dispatch: React.Dispatch<ActionType>
   filteredTodos: ListOfTodos
   handleInitTodos: () => void
   handleRemove: (id: TodoId) => void
@@ -46,4 +44,11 @@ export interface TodoContextType {
   handleFilterChange: (filter: FilterValue) => void
   handleNewTodo: (text: TodoTitle) => void
   handleEditTitle: (id: TodoId, title: TodoTitle) => void
+}
+
+export interface DADContextType {
+  handleDragStart: (id: TodoId) => void
+  handleDragOver: (e: React.DragEvent<HTMLLIElement>, id: TodoId) => void
+  handleDragEnd: (e: React.DragEvent<HTMLLIElement>) => void
+  handleDrop: (e: React.DragEvent<HTMLElement>) => void
 }

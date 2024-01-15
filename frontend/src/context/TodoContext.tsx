@@ -1,4 +1,4 @@
-import { useReducer, createContext, useEffect } from 'react'
+import { useReducer, createContext } from 'react'
 import { TODO_FILTERS } from '../consts'
 import { todoReducer } from '../reducer/todoReducer'
 import {
@@ -9,14 +9,11 @@ import {
   type TodoId,
   type TodoTitle,
   type ListOfTodos,
-  type TodoType,
 } from '../types'
 import { TODO_ACTIONS } from '../reducer/actions'
 import { TodoService } from '../services/todos'
 
 const TodoContext = createContext<TodoContextType>(null!)
-
-const URL = 'http://localhost:3030/todos'
 
 export const InitialState: StateType = {
   todos: [],
@@ -45,14 +42,14 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
-        console.log('nashe ', err)
+        console.log(err)
       })
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
     TodoService.addTodo(title)
-      .then((todo: TodoType) => {
-        dispatch({ type: TODO_ACTIONS.ADD, payload: todo })
+      .then((todos: ListOfTodos) => {
+        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
         console.log(err)
@@ -96,10 +93,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const onClearCompleted = async (): Promise<void> => {
-    fetch(`${URL}/completed`, {
-      method: 'DELETE',
-    })
-      .then(async (res) => await res.json())
+    TodoService.clearCompleted()
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
@@ -114,6 +108,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
 
   const data = {
     state,
+    dispatch,
     filteredTodos,
     handleInitTodos,
     handleNewTodo,
@@ -123,10 +118,6 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     onClearCompleted,
     handleFilterChange,
   }
-
-  useEffect(() => {
-    console.log('UE', state.todos)
-  }, [state.todos])
 
   return <TodoContext.Provider value={data}> {children} </TodoContext.Provider>
 }

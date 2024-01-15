@@ -1,8 +1,4 @@
-import {
-  type StateType,
-  type ActionType,
-  type ListOfTodos,
-} from '../types'
+import { type StateType, type ActionType, type ListOfTodos } from '../types'
 
 import { TODO_ACTIONS } from './actions'
 
@@ -16,22 +12,6 @@ export const todoReducer: ReducerType = (state, action) => {
         ...state,
         todos,
         activeCount: todos.filter((todo) => !todo.completed).length,
-      }
-    }
-
-    case TODO_ACTIONS.ADD: {
-      return {
-        ...state,
-        todos: [...state.todos, action.payload],
-        activeCount: state.activeCount + 1,
-      }
-    }
-
-    case TODO_ACTIONS.ORDER_CHANGE: {
-      const todos: ListOfTodos = action.payload
-      return {
-        ...state,
-        todos,
       }
     }
 

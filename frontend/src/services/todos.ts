@@ -1,9 +1,4 @@
-import {
-  type ListOfTodos,
-  type TodoType,
-  type TodoId,
-  type TodoTitle,
-} from '../types'
+import { type ListOfTodos, type TodoId, type TodoTitle } from '../types'
 
 const URL = 'http://localhost:3030/todos'
 
@@ -19,7 +14,7 @@ export class TodoService {
     }
   }
 
-  static addTodo = async (title: TodoTitle): Promise<TodoType> => {
+  static addTodo = async (title: TodoTitle): Promise<ListOfTodos> => {
     try {
       const res = await fetch(URL, {
         method: 'POST',
@@ -30,8 +25,8 @@ export class TodoService {
           title,
         }),
       })
-      const todo: TodoType = await res.json()
-      return todo
+      const todos: ListOfTodos = await res.json()
+      return todos
     } catch (e) {
       console.log('Error adding todo')
       throw e
@@ -87,6 +82,24 @@ export class TodoService {
       return todos
     } catch (e) {
       console.log('Error clearing completed todos')
+      throw e
+    }
+  }
+
+  static updateOrder = async (todos: ListOfTodos): Promise<ListOfTodos> => {
+    todos = todos.map((todo, index) => ({ ...todo, order: index }))
+    try {
+      const res = await fetch(URL, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todos),
+      })
+      const newTodos: ListOfTodos = await res.json()
+      return newTodos
+    } catch (e) {
+      console.log('Error updating order')
       throw e
     }
   }
