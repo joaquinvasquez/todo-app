@@ -41,7 +41,7 @@ export class TodoModel {
       newTodo = { ...todos[index], completed: !todos[index].completed }
     }
     todos.splice(index, 1, newTodo)
-    return newTodo
+    return todos
   }
 
   static deleteTodo = async ({ id }) => {
