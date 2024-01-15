@@ -8,8 +8,11 @@ import {
   type StateType,
   type TodoId,
   type TodoTitle,
+  type ListOfTodos,
+  type TodoType,
 } from '../types'
 import { TODO_ACTIONS } from '../reducer/actions'
+import { TodoService } from '../services/todos'
 
 const TodoContext = createContext<TodoContextType>(null!)
 
@@ -37,28 +40,18 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   })
 
   const handleInitTodos = async (): Promise<void> => {
-    fetch(URL)
-      .then(async (res) => await res.json())
-      .then((todos) => {
+    TodoService.getTodos()
+      .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
-        console.log(err)
+        console.log('nashe ', err)
       })
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
-    fetch(URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-      }),
-    })
-      .then(async (res) => await res.json())
-      .then((todo) => {
+    TodoService.addTodo(title)
+      .then((todo: TodoType) => {
         dispatch({ type: TODO_ACTIONS.ADD, payload: todo })
       })
       .catch((err) => {
@@ -67,12 +60,12 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const handleCheck = async (id: TodoId): Promise<void> => {
-    fetch(`${URL}/${id}`, {
-      method: 'PUT',
-    })
-      .then(async (res) => await res.json())
-      .then((todo) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE, payload: todo })
+    TodoService.updateTodo(id)
+      .then((todos: ListOfTodos) => {
+        dispatch({
+          type: TODO_ACTIONS.UPDATE_LIST,
+          payload: todos,
+        })
       })
       .catch((err) => {
         console.log(err)
@@ -83,28 +76,18 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     id: TodoId,
     title: TodoTitle
   ): Promise<void> => {
-    fetch(`${URL}/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ title }),
-    })
-      .then(async (res) => await res.json())
-      .then((todo) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE, payload: todo })
+    TodoService.updateTodo(id, title)
+      .then((todos: ListOfTodos) => {
+        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  const handleRemove = (id: TodoId): void => {
-    fetch(`${URL}/${id}`, {
-      method: 'DELETE',
-    })
-      .then(async (res) => await res.json())
-      .then((todos) => {
+  const handleRemove = async (id: TodoId): Promise<void> => {
+    TodoService.removeTodo(id)
+      .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
@@ -112,12 +95,12 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
       })
   }
 
-  const onClearCompleted = (): void => {
+  const onClearCompleted = async (): Promise<void> => {
     fetch(`${URL}/completed`, {
       method: 'DELETE',
     })
       .then(async (res) => await res.json())
-      .then((todos) => {
+      .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {

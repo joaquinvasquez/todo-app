@@ -12,8 +12,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 
 // TODO:
 // - Crear API ✔️
-// - Mejorar API
-// - Mejorar consumo de API en el front
+// - Mejorar API ✔️
+// - Mejorar consumo de API en el front ✔️
 // - Drag and drop
 // - Modo oscuro y claro
 // - Encontrar la manera de guardar en la base a cada usuario por dispositivo

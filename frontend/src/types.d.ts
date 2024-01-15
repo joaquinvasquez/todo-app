@@ -27,11 +27,9 @@ export interface StateType {
 export type TodoActionsType = (typeof TODO_ACTIONS)[keyof typeof TODO_ACTIONS]
 
 export type PayloadType =
-  | TodoId
-  | TodoTitle
-  | { id: TodoId, title: TodoTitle }
-  | FilterValue
+  | TodoType
   | ListOfTodos
+  | FilterValue
 
 export interface ActionType {
   type: TodoActionsType

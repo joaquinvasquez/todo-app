@@ -2,7 +2,6 @@ import {
   type StateType,
   type ActionType,
   type ListOfTodos,
-  type TodoCompleted,
 } from '../types'
 
 import { TODO_ACTIONS } from './actions'
@@ -25,20 +24,6 @@ export const todoReducer: ReducerType = (state, action) => {
         ...state,
         todos: [...state.todos, action.payload],
         activeCount: state.activeCount + 1,
-      }
-    }
-
-    case TODO_ACTIONS.UPDATE: {
-      const check: TodoCompleted = action.payload.completed
-      return {
-        ...state,
-        todos: state.todos.map((todo) => {
-          if (todo.id === action.payload.id) {
-            return action.payload
-          }
-          return todo
-        }),
-        activeCount: check ? state.activeCount - 1 : state.activeCount + 1,
       }
     }
 

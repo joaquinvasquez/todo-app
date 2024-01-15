@@ -29,6 +29,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/comma-dangle': 'off',
+    '@typescript-eslint/no-extraneous-class': 'off',
   },
   ignorePatterns: ['.eslintrc.cjs', 'vite.config.ts'],
 }
