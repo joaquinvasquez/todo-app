@@ -6,6 +6,15 @@ const todoSchema = z.object({
   order: z.number().int().min(0),
 })
 
+const todoUpdateSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string().min(1).max(50),
+  completed: z.boolean(),
+  order: z.number().int().min(0),
+})
+
+const todoListSchema = z.array(todoUpdateSchema)
+
 export const validateTodoCreate = (todo) => {
   return z.object({ title: z.string().min(1).max(50) }).safeParse(todo)
 }
@@ -16,4 +25,8 @@ export const validateTodoUpdate = (todo) => {
 
 export const validateId = (id) => {
   return z.string().uuid().safeParse(id)
+}
+
+export const validateTodoList = (todoList) => {
+  return todoListSchema.safeParse(todoList)
 }

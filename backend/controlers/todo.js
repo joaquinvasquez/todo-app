@@ -2,6 +2,7 @@ import { TodoModel } from '../models/local/todo.js'
 import {
   validateId,
   validateTodoCreate,
+  validateTodoList,
   validateTodoUpdate,
 } from '../schemas/validation.js'
 
@@ -22,8 +23,8 @@ export class TodoController {
         res.status(400).json({ error: validBody.error })
       }
       const { title } = validBody.data
-      const newTodo = await TodoModel.createTodo({ title })
-      res.status(201).json(newTodo)
+      const newTodos = await TodoModel.createTodo({ title })
+      res.status(201).json(newTodos)
     } catch (err) {
       next(err)
     }
@@ -66,6 +67,16 @@ export class TodoController {
       }
       const deleted = await TodoModel.deleteTodo({ id: validId.data })
       res.json(deleted)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static updateTodosOrder = async (req, res, next) => {
+    try {
+      const validBody = validateTodoList(req.body)
+      const updated = await TodoModel.updateTodosOrder(validBody.data)
+      res.json(updated)
     } catch (err) {
       next(err)
     }

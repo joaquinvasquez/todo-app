@@ -12,10 +12,6 @@ export class TodoModel {
       .map((todo, index) => ({ ...todo, order: index }))
   }
 
-  static getIndexById = async ({ id }) => {
-    return todos.findIndex((todo) => todo.id === id)
-  }
-
   static createTodo = async ({ title }) => {
     const newTodo = {
       id: crypto.randomUUID(),
@@ -24,7 +20,7 @@ export class TodoModel {
       order: todos.length,
     }
     todos.push(newTodo)
-    return newTodo
+    return todos
   }
 
   static updateTodo = async ({ id, body }) => {
@@ -60,6 +56,11 @@ export class TodoModel {
   static deleteCompletedTodos = async () => {
     todos = todos.filter((todo) => !todo.completed)
     todos = todos.map((todo, index) => ({ ...todo, order: index }))
+    return todos
+  }
+
+  static updateTodosOrder = async (todosOrder) => {
+    todos = todosOrder.sort((a, b) => a.order - b.order)
     return todos
   }
 }

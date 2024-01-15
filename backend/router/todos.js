@@ -5,6 +5,7 @@ export const todoRouter = Router()
 
 todoRouter.get('/', TodoController.getAllTodos)
 todoRouter.post('/', TodoController.createTodo)
+todoRouter.put('/', TodoController.updateTodosOrder)
 todoRouter.put('/:id', TodoController.updateTodo)
 todoRouter.delete('/completed', TodoController.deleteCompletedTodos)
 todoRouter.delete('/:id', TodoController.deleteTodo)
