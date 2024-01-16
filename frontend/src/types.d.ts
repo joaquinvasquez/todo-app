@@ -52,3 +52,8 @@ export interface DADContextType {
   handleDragEnd: (e: React.DragEvent<HTMLLIElement>) => void
   handleDrop: (e: React.DragEvent<HTMLElement>) => void
 }
+
+export interface ThemeContextType {
+  theme: string
+  handleTheme: () => void
+}

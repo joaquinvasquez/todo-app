@@ -6,12 +6,74 @@
 }
 
 header h1 img {
-  height: 60px;
-  width: 60px;
+  height: 58px;
+  width: 58px;
 }
-
 .todo-count strong {
   font-weight: bold;
+}
+
+/* THEME SWITCH */
+.theme-switch-container {
+  width: 24px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 20;
+}
+.theme-switch-container .theme-switch-window {
+  width: 200%;
+  height: 100%;
+  display: flex;
+  -webkit-transition: transform 300ms ease-in-out;
+  transition: transform 300ms ease-in-out;
+  transform: translateX(-24px);
+}
+.theme-switch-container.dark .theme-switch-window {
+  transform: translateX(0px);
+  filter: invert(1);
+}
+.theme-switch-window .theme-switch {
+  width: 50%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DARK THEME */
+html {
+  transition: all 200ms ease-in-out;
+}
+html.dark {
+  background-color: #171717;
+}
+html.dark .todoapp {
+  background-color: #222;
+}
+html.dark .new-todo,
+html.dark .footer {
+  color: #bbb;
+}
+html.dark .new-todo::placeholder {
+  color: #555;
+}
+html.dark .toggle + label {
+  color: #b7b7b7;
+}
+html.dark .toggle:checked + label {
+  color: #6b6b6b;
+}
+html.dark .todo-list li {
+  border-bottom: 1px solid #555;
+}
+html.dark .footer::before {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #222,
+    0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #222,
+    0 17px 2px -6px rgba(0, 0, 0, 0.2) !important;
 }
 
 @media screen and (max-width: 600px) {
@@ -23,7 +85,7 @@ header h1 img {
     height: 30px;
     width: 30px;
   }
-  .todoapp{
+  .todoapp {
     width: 90%;
     margin-left: auto;
     margin-right: auto;

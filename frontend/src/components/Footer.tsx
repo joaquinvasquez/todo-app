@@ -4,7 +4,8 @@ import Filters from './Filters'
 import TodoContext from '../context/TodoContext'
 
 const Footer: React.FC = () => {
-  const { state, onClearCompleted, handleFilterChange } = useContext(TodoContext)
+  const { state, onClearCompleted, handleFilterChange } =
+    useContext(TodoContext)
   const { todos, activeCount, filter } = state
   const completedCount = todos.length - activeCount
 
