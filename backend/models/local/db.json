@@ -4,37 +4,49 @@
       "id": "f7a846d3-4b8a-4a1d-946b-df76ec6bd90f",
       "title": "todo 1",
       "completed": false,
-      "order": 1
+      "order": 1,
+      "user": "c6f1c9f1-4f3a-4d3e-8f9e-6a2d4a1a8e5d"
     },
     {
       "id": "7bd56810-31b1-486f-8c3d-4a4120bd8a62",
       "title": "todo 2",
       "completed": true,
-      "order": 2
+      "order": 2,
+      "user": "d6f1d9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d"
     },
     {
       "id": "e6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d",
       "title": "todo 3",
       "completed": false,
-      "order": 0
+      "order": 0,
+      "user": "e6f1c9f1-4f3a-4d3e-8f9e-6a1d4a0a8e5d"
     },
     {
       "id": "b6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d",
       "title": "todo 4",
       "completed": false,
-      "order": 3
+      "order": 3,
+      "user": "f6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d"
     },
     {
       "id": "c6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d",
       "title": "todo 5",
       "completed": false,
-      "order": 5
+      "order": 5,
+      "user": "c6f1c9f1-4f3a-4d3e-8f9e-6a2d4a1a8e5d"
     },
     {
       "id": "d6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d",
       "title": "todo 6",
       "completed": true,
-      "order": 4
+      "order": 4,
+      "user": "d6f1d9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d"
     }
+  ],
+  "users": [
+    { "user_id": "c6f1c9f1-4f3a-4d3e-8f9e-6a2d4a1a8e5d" },
+    { "user_id": "d6f1d9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d" },
+    { "user_id": "e6f1c9f1-4f3a-4d3e-8f9e-6a1d4a0a8e5d" },
+    { "user_id": "f6f1c9f1-4f3a-4d3e-8f9e-6a2d4a0a8e5d" }
   ]
 }
