@@ -48,7 +48,8 @@ header h1 img {
 html {
   transition: all 200ms ease-in-out;
 }
-html.dark {
+html.dark,
+html.dark #root{
   background-color: #121212;
 }
 html.dark .todoapp {
@@ -99,5 +100,34 @@ html.dark .footer::before {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+  }
+  .footer {
+    display: flex;
+    height: 70px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    align-content: space-between;
+  }
+  .footer .filters {
+    position: relative;
+    order: 3;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    border-top: solid 1px #ddd;
+    padding-top: 12px;
+    bottom: 0 !important;
+  }
+  html.dark .footer .filters {
+    border-top: solid 1px #333;
+  }
+  .footer .todo-count {
+    float: none;
+    order: 1;
+  }
+  .footer .clear-completed {
+    float: none;
+    order: 2;
   }
 }
