@@ -1,11 +1,19 @@
-import { type ListOfTodos, type TodoId, type TodoTitle } from '../types'
+import {
+  type UserType,
+  type ListOfTodos,
+  type TodoId,
+  type TodoTitle,
+} from '../types'
 
-const URL = 'http://localhost:3030/todos'
+const baseURL = 'http://localhost:3030/todos'
 
 export class TodoService {
-  static getTodos = async (): Promise<ListOfTodos> => {
+  static getTodos = async (user: UserType): Promise<ListOfTodos> => {
     try {
-      const res = await fetch(URL)
+      if (user === '') {
+        return []
+      }
+      const res = await fetch(`${baseURL}/${user}`)
       const todos: ListOfTodos = await res.json()
       return todos
     } catch (e) {
@@ -14,9 +22,12 @@ export class TodoService {
     }
   }
 
-  static addTodo = async (title: TodoTitle): Promise<ListOfTodos> => {
+  static addTodo = async (
+    user: UserType,
+    title: TodoTitle
+  ): Promise<ListOfTodos> => {
     try {
-      const res = await fetch(URL, {
+      const res = await fetch(`${baseURL}/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,6 +45,7 @@ export class TodoService {
   }
 
   static updateTodo = async (
+    user: UserType,
     id: TodoId,
     title: TodoTitle = ''
   ): Promise<ListOfTodos> => {
@@ -51,7 +63,7 @@ export class TodoService {
           body: JSON.stringify({ title }),
         }
       }
-      const res = await fetch(`${URL}/${id}`, fetchOptions)
+      const res = await fetch(`${baseURL}/${user}/${id}`, fetchOptions)
       const todos: ListOfTodos = await res.json()
       return todos
     } catch (e) {
@@ -60,9 +72,12 @@ export class TodoService {
     }
   }
 
-  static removeTodo = async (id: TodoId): Promise<ListOfTodos> => {
+  static removeTodo = async (
+    user: UserType,
+    id: TodoId
+  ): Promise<ListOfTodos> => {
     try {
-      const res = await fetch(`${URL}/${id}`, {
+      const res = await fetch(`${baseURL}/${user}/${id}`, {
         method: 'DELETE',
       })
       const todos: ListOfTodos = await res.json()
@@ -73,9 +88,9 @@ export class TodoService {
     }
   }
 
-  static clearCompleted = async (): Promise<ListOfTodos> => {
+  static clearCompleted = async (user: UserType): Promise<ListOfTodos> => {
     try {
-      const res = await fetch(`${URL}/completed`, {
+      const res = await fetch(`${baseURL}/${user}/completed`, {
         method: 'DELETE',
       })
       const todos: ListOfTodos = await res.json()
@@ -86,10 +101,13 @@ export class TodoService {
     }
   }
 
-  static updateOrder = async (todos: ListOfTodos): Promise<ListOfTodos> => {
+  static updateOrder = async (
+    user: UserType,
+    todos: ListOfTodos
+  ): Promise<ListOfTodos> => {
     todos = todos.map((todo, index) => ({ ...todo, order: index }))
     try {
-      const res = await fetch(URL, {
+      const res = await fetch(`${baseURL}/${user}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

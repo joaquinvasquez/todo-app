@@ -3,6 +3,7 @@ import { type ListOfTodos, type DADContextType, type TodoId } from '../types'
 import TodoContext from './TodoContext'
 import { TodoService } from '../services/todos'
 import { TODO_ACTIONS } from '../reducer/actions'
+import UserContext from './UserContext'
 
 const DragAndDropContext = createContext<DADContextType>(null!)
 
@@ -17,6 +18,7 @@ const DADProvider: React.FC<Props> = ({ children }) => {
   const [tempFilteredTodos, setTempFilteredTodos] = useState<ListOfTodos>([])
 
   const { state, filteredTodos, dispatch } = useContext(TodoContext)
+  const { user } = useContext(UserContext)
 
   const handleOrderChange = (draggingId: TodoId, droppingId: TodoId): void => {
     const draggedIndex = state.todos.findIndex((todo) => todo.id === draggingId)
@@ -59,7 +61,7 @@ const DADProvider: React.FC<Props> = ({ children }) => {
   const handleDrop = (e: React.DragEvent<HTMLElement>): void => {
     e.preventDefault()
     setIsCorrectDrop(true)
-    TodoService.updateOrder(state.todos)
+    TodoService.updateOrder(user, state.todos)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })

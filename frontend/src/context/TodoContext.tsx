@@ -1,4 +1,4 @@
-import { useReducer, createContext } from 'react'
+import { useReducer, createContext, useContext, useEffect } from 'react'
 import { TODO_FILTERS } from '../consts'
 import { todoReducer } from '../reducer/todoReducer'
 import {
@@ -12,6 +12,7 @@ import {
 } from '../types'
 import { TODO_ACTIONS } from '../reducer/actions'
 import { TodoService } from '../services/todos'
+import UserContext from './UserContext'
 
 const TodoContext = createContext<TodoContextType>(null!)
 
@@ -29,6 +30,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer<
   (state: StateType, action: ActionType) => StateType
   >(todoReducer, InitialState)
+  const { user } = useContext(UserContext)
 
   const filteredTodos = state.todos.filter((item) => {
     if (state.filter === TODO_FILTERS.ACTIVE) return !item.completed
@@ -37,7 +39,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   })
 
   const handleInitTodos = async (): Promise<void> => {
-    TodoService.getTodos()
+    TodoService.getTodos(user)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
@@ -47,7 +49,8 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
-    TodoService.addTodo(title)
+    console.log('user: ', user)
+    TodoService.addTodo(user, title)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
@@ -57,7 +60,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const handleCheck = async (id: TodoId): Promise<void> => {
-    TodoService.updateTodo(id)
+    TodoService.updateTodo(user, id)
       .then((todos: ListOfTodos) => {
         dispatch({
           type: TODO_ACTIONS.UPDATE_LIST,
@@ -73,7 +76,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     id: TodoId,
     title: TodoTitle
   ): Promise<void> => {
-    TodoService.updateTodo(id, title)
+    TodoService.updateTodo(user, id, title)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
@@ -83,17 +86,17 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const handleRemove = async (id: TodoId): Promise<void> => {
-    TodoService.removeTodo(id)
+    TodoService.removeTodo(user, id)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
       .catch((err) => {
-        console.log('error acá', err)
+        console.log(err)
       })
   }
 
   const onClearCompleted = async (): Promise<void> => {
-    TodoService.clearCompleted()
+    TodoService.clearCompleted(user)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
@@ -105,6 +108,12 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   const handleFilterChange = (filter: FilterValue): void => {
     dispatch({ type: TODO_ACTIONS.FILTER_CHANGE, payload: filter })
   }
+
+  useEffect(() => {
+    handleInitTodos().catch((err) => {
+      console.log(err)
+    })
+  }, [user])
 
   const data = {
     state,

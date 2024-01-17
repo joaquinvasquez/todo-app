@@ -57,3 +57,9 @@ export interface ThemeContextType {
   theme: string
   handleTheme: () => void
 }
+
+export type UserType = string
+
+export interface UserContextType {
+  user: UserType
+}

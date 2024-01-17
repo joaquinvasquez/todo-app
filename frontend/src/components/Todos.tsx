@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import Todo from './Todo'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import TodoContext from '../context/TodoContext'
@@ -8,13 +8,9 @@ import { type TodoId } from '../types'
 const Todos: React.FC = () => {
   const [isEditing, setIsEditing] = useState<TodoId>('')
   const [parent] = useAutoAnimate()
-  const { handleInitTodos, filteredTodos } = useContext(TodoContext)
+  const { filteredTodos } = useContext(TodoContext)
   const { handleDragStart, handleDragOver, handleDragEnd, handleDrop } =
     useContext(DragAndDropContext)
-
-  useEffect(() => {
-    handleInitTodos()
-  }, [])
 
   return (
     <ul

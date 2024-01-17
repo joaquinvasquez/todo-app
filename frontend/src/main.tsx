@@ -4,12 +4,15 @@ import 'todomvc-app-css/index.css'
 import './index.css'
 import { TodoProvider } from './context/TodoContext.tsx'
 import { ThemeProvider } from './context/ThemeContext.tsx'
+import { UserProvider } from './context/UserContext.tsx'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ThemeProvider>
-    <TodoProvider>
-      <App />
-    </TodoProvider>
+    <UserProvider>
+      <TodoProvider>
+        <App />
+      </TodoProvider>
+    </UserProvider>
   </ThemeProvider>
 )
 
@@ -19,10 +22,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 // - Mejorar consumo de API en el front ✔️
 // - Drag and drop ✔️
 // - Modo oscuro y claro ✔️
-// - Encontrar la manera de guardar en la base a cada usuario por dispositivo
-// - Arquitectura de la base de datos
-// - Crear la base de datos
+// - Encontrar la manera de guardar en la base a cada usuario por dispositivo => localStorage ✔️
+// - Arquitectura de la base de datos ✔️
+// - Codear la logica del manejo de usuarios ✔️
 // - Revisar en mobile
+// - Crear la base de datos
 // - Desplegar API
 // - Desplegar DB
 // - Desplegar Front

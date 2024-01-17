@@ -49,7 +49,7 @@ html {
   transition: all 200ms ease-in-out;
 }
 html.dark {
-  background-color: #171717;
+  background-color: #121212;
 }
 html.dark .todoapp {
   background-color: #222;
@@ -61,6 +61,10 @@ html.dark .footer {
 html.dark .new-todo::placeholder {
   color: #555;
 }
+html.dark .todo-list .edit {
+  background-color: #111;
+  color: #bbb;
+}
 html.dark .toggle + label {
   color: #b7b7b7;
 }
@@ -69,6 +73,12 @@ html.dark .toggle:checked + label {
 }
 html.dark .todo-list li {
   border-bottom: 1px solid #555;
+}
+html.dark .todo-list li:first-child {
+  border-top: 2px solid #555;
+}
+html.dark .footer {
+  border-top: 1px solid #555;
 }
 html.dark .footer::before {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #222,
