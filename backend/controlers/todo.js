@@ -1,4 +1,4 @@
-import { TodoModel } from '../models/local/todo.js'
+import { TodoModel } from '../models/mysql/todo.js'
 import {
   validateId,
   validateTodoCreate,

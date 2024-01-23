@@ -2,7 +2,7 @@ import z from 'zod'
 
 const todoSchema = z.object({
   title: z.string().min(1).max(50),
-  completed: z.boolean(),
+  completed: z.coerce.boolean(),
   order: z.number().int().min(0),
   user: z.string().uuid(),
 })
@@ -10,7 +10,7 @@ const todoSchema = z.object({
 const todoUpdateSchema = z.object({
   id: z.string().uuid(),
   title: z.string().min(1).max(50),
-  completed: z.boolean(),
+  completed: z.coerce.boolean(),
   order: z.number().int().min(0),
   user: z.string().uuid(),
 })
