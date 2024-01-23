@@ -1,4 +1,4 @@
-DELETE IF EXISTS DATABASE todos_app;
+-- DELETE IF EXISTS DATABASE todos_app;
 CREATE DATABASE todos_app;
 USE todos_app;
 
@@ -15,7 +15,7 @@ CREATE TABLE users (
 );
 
 
--- INSERT INTO users (user_id) VALUES (UUID_TO_BIN(UUID()));
+-- INSERT INTO users VALUES (UUID_TO_BIN(UUID()));
 
 -- INSERT INTO todos VALUES (
 --   UUID_TO_BIN(UUID()),
@@ -26,12 +26,12 @@ CREATE TABLE users (
 -- );
 
 
-INSERT INTO todos (title, `order`, `user`)
-VALUES (
-  'titulo', 
-  (SELECT MAX(`order`) FROM todos WHERE BIN_TO_UUID(user) = '9bf28842-b94a-11ee-8e5e-244bfec8f5ca' LIMIT 1),
-  UUID_TO_BIN('9ae7969e-b94f-11ee-b35f-244bfec8f5ca')
-);
+-- INSERT INTO todos (title, `order`, `user`)
+-- VALUES (
+--   'titulo', 
+--   (SELECT MAX(`order`) FROM todos WHERE BIN_TO_UUID(user) = '9bf28842-b94a-11ee-8e5e-244bfec8f5ca' LIMIT 1),
+--   UUID_TO_BIN('9ae7969e-b94f-11ee-b35f-244bfec8f5ca')
+-- );
 
 
 -- SELECT BIN_TO_UUID(todo_id) todo_id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos;

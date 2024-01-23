@@ -1,4 +1,4 @@
-import { UserModel } from '../models/local/user.js'
+import { UserModel } from '../models/mysql/user.js'
 
 export class UserController {
   static createUser = async (req, res, next) => {
