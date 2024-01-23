@@ -49,7 +49,6 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
-    console.log('user: ', user)
     TodoService.addTodo(user, title)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })

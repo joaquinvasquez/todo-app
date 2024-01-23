@@ -25,8 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 // - Encontrar la manera de guardar en la base a cada usuario por dispositivo => localStorage ✔️
 // - Arquitectura de la base de datos ✔️
 // - Codear la logica del manejo de usuarios ✔️
-// - Revisar en mobile
-// - Crear la base de datos
+// - Crear la base de datos ✔️
+// - Codear la logica de la base de datos ✔️
 // - Desplegar API
 // - Desplegar DB
 // - Desplegar Front
+// - Revisar en mobile
