@@ -8,8 +8,10 @@ const CreateTodo: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault()
-    handleNewTodo(text)
-    setText('')
+    if (text.trim() !== '') {
+      handleNewTodo(text)
+      setText('')
+    }
   }
   return (
     <form onSubmit={handleSubmit}>
