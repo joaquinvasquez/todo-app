@@ -12,7 +12,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
 
   const createUser = async (): Promise<UserType> => {
     try {
-      const res = await fetch('http://localhost:3030/users', {
+      const res = await fetch('http://todo-app-dev-cxpg.1.us-1.fl0.io/users', {
         method: 'POST',
       })
       const newUser: UserType = await res.json()
