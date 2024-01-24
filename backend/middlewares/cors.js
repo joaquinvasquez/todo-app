@@ -1,6 +1,7 @@
 const ACCEPTED_ORIGINS = [
-  'http://localhost:5173',
   'https://todos-app-jv.web.app/',
+  'https://todos-app-jv.firebaseapp.com/',
+  'http://localhost:5173',
 ]
 
 export const corsMiddleware = (req, res, next) => {
