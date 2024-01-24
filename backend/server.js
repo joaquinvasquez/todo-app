@@ -26,6 +26,10 @@ app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(
-    `Server listening on port http://localhost:${PORT} // ENV: ${process.env.NODE_ENV}`
+    `Server listening on port ${PORT} // ENV: ${process.env.NODE_ENV}`
   )
 })
+
+setInterval(() => {
+  console.log('To maintain the server awake')
+}, 3600000) // 1 hour
