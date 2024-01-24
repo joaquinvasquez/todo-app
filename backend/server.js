@@ -1,4 +1,5 @@
 import express from 'express'
+import 'dotenv/config'
 import { todoRouter } from './router/todos.js'
 import { corsMiddleware, corsPreflightMiddleware } from './middlewares/cors.js'
 import { errorHandler } from './middlewares/errorHandler.js'
