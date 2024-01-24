@@ -15,3 +15,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </UserProvider>
   </ThemeProvider>
 )
+
+// TODO:
+// - firebase deploy del backend?
+// - actualizar URL del backend en el frontend y viceversa
+// - mobile?
