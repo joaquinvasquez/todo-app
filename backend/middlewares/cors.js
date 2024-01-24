@@ -1,4 +1,7 @@
-const ACCEPTED_ORIGINS = ['http://localhost:5173']
+const ACCEPTED_ORIGINS = [
+  'http://localhost:5173',
+  'https://todos-app-jv.web.app/',
+]
 
 export const corsMiddleware = (req, res, next) => {
   const origin = req.headers.origin
