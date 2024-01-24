@@ -5,7 +5,7 @@ import {
   type TodoTitle,
 } from '../types'
 
-const baseURL = 'http://todo-app-dev-cxpg.1.us-1.fl0.io/todos'
+const baseURL = 'https://todo-app-dev-cxpg.1.us-1.fl0.io/todos'
 
 export class TodoService {
   static getTodos = async (user: UserType): Promise<ListOfTodos> => {
