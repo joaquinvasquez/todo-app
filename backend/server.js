@@ -34,5 +34,4 @@ setInterval(async () => {
   await fetch('https://todo-app-jvasquez-dev.onrender.com/todos').then(
     console.log('To maintain the server awake')
   )
-}, 60000) // 1 minute
-// }, 3600000) // 1 hour
+}, 3600000 * 12) // 12 hours
