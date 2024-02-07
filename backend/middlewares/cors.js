@@ -1,6 +1,6 @@
 const ACCEPTED_ORIGINS = [
-  'https://todos-app-jv.web.app/',
-  'https://todos-app-jv.firebaseapp.com/',
+  'https://todos-app-jv.web.app',
+  'https://todos-app-jv.firebaseapp.com',
   'http://localhost:5173',
 ]
 
