@@ -1,6 +1,6 @@
 **TodoApp (English)**
 
-![TodoApp Logo](frontend/logo-readme.svg)
+![TodoApp Logo](frontend/logo-readme.png)
 
 # TodoApp - Todo List Management
 
@@ -31,7 +31,7 @@ Contributions are welcome! Feel free to open Issues or submit Pull Requests.
 
 **TodoApp (Español)**
 
-![Logo de TodoApp](frontend/logo-readme.svg)
+![Logo de TodoApp](frontend/logo-readme.png)
 
 # TodoApp - Gestión de Lista de Tareas
 
