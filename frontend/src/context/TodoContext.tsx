@@ -47,27 +47,24 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   })
 
   const handleInitTodos = async (): Promise<void> => {
-    setLoading(true)
-    TodoService.getTodos(user)
-      .then((todos: ListOfTodos) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
-      })
-      .then(() => {
-        console.log('Todos loaded')
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
+    try {
+      const todos: ListOfTodos = await TodoService.getTodos(user)
+      dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
+      if (todos.length !== 0 || user !== '') setLoading(false)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
     const id = crypto.randomUUID()
     const order = state.todos.length
     dispatch({ type: TODO_ACTIONS.ADD, payload: { title, id, order } })
-    TodoService.addTodo(user, title, id, order).catch((err) => {
+    try {
+      await TodoService.addTodo(user, title, id, order)
+    } catch (err) {
       console.error(err)
-    })
+    }
   }
 
   const handleCheck = async (id: TodoId): Promise<void> => {
@@ -82,23 +79,29 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
     title: TodoTitle
   ): Promise<void> => {
     dispatch({ type: TODO_ACTIONS.EDIT_TITLE, payload: { id, title } })
-    TodoService.updateTodo(user, id, title).catch((err) => {
+    try {
+      await TodoService.updateTodo(user, id, title)
+    } catch (err) {
       console.error(err)
-    })
+    }
   }
 
   const handleRemove = async (id: TodoId): Promise<void> => {
     dispatch({ type: TODO_ACTIONS.REMOVE, payload: id })
-    TodoService.removeTodo(user, id).catch((err) => {
+    try {
+      await TodoService.removeTodo(user, id)
+    } catch (err) {
       console.error(err)
-    })
+    }
   }
 
   const onClearCompleted = async (): Promise<void> => {
     dispatch({ type: TODO_ACTIONS.CLEAR_COMPLETED })
-    TodoService.clearCompleted(user).catch((err) => {
+    try {
+      await TodoService.clearCompleted(user)
+    } catch (err) {
       console.error(err)
-    })
+    }
   }
 
   const handleFilterChange = (filter: FilterValue): void => {

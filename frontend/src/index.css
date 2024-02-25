@@ -144,7 +144,7 @@ html.dark .footer::before {
 .spinner {
   height: 5dvw;
   width: 5dvw;
-  border: thick solid var(--c4);
+  border: thick solid #b83f45;
   border-right-color: transparent;
   border-radius: 50%;
   animation: spinnerAnimation 700ms ease-out infinite;

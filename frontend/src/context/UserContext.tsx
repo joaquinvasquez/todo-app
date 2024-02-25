@@ -10,7 +10,7 @@ interface Props {
 const UserProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<UserType>('')
 
-  const createUser = async (): Promise<UserType> => {
+  const createUser = async (): Promise<void> => {
     try {
       const res = await fetch(
         'https://todo-app-jvasquez-dev.onrender.com/users',
@@ -21,7 +21,6 @@ const UserProvider: React.FC<Props> = ({ children }) => {
       const newUser: UserType = await res.json()
       setUser(newUser)
       localStorage.setItem('user', newUser)
-      return newUser
     } catch (e) {
       console.log('Error creating user')
       throw e
@@ -35,9 +34,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
     if (localUser !== '') {
       setUser(localUser)
     } else {
-      createUser().catch((err) => {
-        console.error(err)
-      })
+      void createUser()
     }
   }, [])
 
