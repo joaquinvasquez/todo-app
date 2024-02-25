@@ -1,9 +1,8 @@
 import { TodoModel } from '../models/mysql/todo.js'
 import {
   validateId,
-  validateTodoCreate,
   validateTodoList,
-  validateTodoUpdate,
+  validateTodo,
   validateUser,
 } from '../schemas/validation.js'
 
@@ -24,13 +23,13 @@ export class TodoController {
   static createTodo = async (req, res, next) => {
     try {
       const userId = validateUser(req.params.user_id)
-      const validBody = validateTodoCreate(req.body)
+      const validBody = validateTodo(req.body)
       if (!userId.success || !validBody.success) {
         res.status(400).json({ error: validBody.error })
       }
-      const { title } = validBody.data
-      const newTodos = await TodoModel.createTodo({ user: userId.data, title })
-      res.status(201).json(newTodos)
+      const { title, id, order } = validBody.data
+      await TodoModel.createTodo({ user: userId.data, title, id, order })
+      res.status(201).send()
     } catch (err) {
       next(err)
     }
@@ -40,29 +39,16 @@ export class TodoController {
     try {
       const userId = validateUser(req.params.user_id)
       const validId = validateId(req.params.id)
-      const validBody = validateTodoUpdate(req.body)
+      const validBody = validateTodo(req.body)
       if (!userId.success || !validId.success || !validBody.success) {
         res.status(400).json({ error: validBody.error })
       }
-      const updated = await TodoModel.updateTodo({
+      await TodoModel.updateTodo({
         user: userId.data,
         id: validId.data,
         body: validBody.data,
       })
-      res.json(updated)
-    } catch (err) {
-      next(err)
-    }
-  }
-
-  static deleteCompletedTodos = async (req, res, next) => {
-    try {
-      const userId = validateUser(req.params.user_id)
-      if (!userId.success) {
-        res.status(400).json({ error: userId.error })
-      }
-      const todos = await TodoModel.deleteCompletedTodos({ user: userId.data })
-      res.send(todos)
+      res.send()
     } catch (err) {
       next(err)
     }
@@ -75,11 +61,24 @@ export class TodoController {
       if (!userId.success || !validId.success) {
         res.status(400).json({ error: validId.error })
       }
-      const deleted = await TodoModel.deleteTodo({
+      await TodoModel.deleteTodo({
         user: userId.data,
         id: validId.data,
       })
-      res.json(deleted)
+      res.send()
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static deleteCompletedTodos = async (req, res, next) => {
+    try {
+      const userId = validateUser(req.params.user_id)
+      if (!userId.success) {
+        res.status(400).json({ error: userId.error })
+      }
+      await TodoModel.deleteCompletedTodos({ user: userId.data })
+      res.send()
     } catch (err) {
       next(err)
     }
@@ -92,11 +91,11 @@ export class TodoController {
       if (!userId.success || !validBody.success) {
         res.status(400).json({ error: validBody.error })
       }
-      const updated = await TodoModel.updateTodosOrder({
+      await TodoModel.updateTodosOrder({
         user: userId.data,
         todosOrder: validBody.data,
       })
-      res.json(updated)
+      res.send()
     } catch (err) {
       next(err)
     }

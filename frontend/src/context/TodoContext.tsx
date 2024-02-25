@@ -1,4 +1,11 @@
-import { useReducer, createContext, useContext, useEffect } from 'react'
+/* eslint-disable @typescript-eslint/indent */
+import {
+  useReducer,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { TODO_FILTERS } from '../consts'
 import { todoReducer } from '../reducer/todoReducer'
 import {
@@ -28,8 +35,9 @@ interface Props {
 
 const TodoProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer<
-  (state: StateType, action: ActionType) => StateType
+    (state: StateType, action: ActionType) => StateType
   >(todoReducer, InitialState)
+  const [loading, setLoading] = useState<boolean>(true)
   const { user } = useContext(UserContext)
 
   const filteredTodos = state.todos.filter((item) => {
@@ -39,69 +47,58 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   })
 
   const handleInitTodos = async (): Promise<void> => {
+    setLoading(true)
     TodoService.getTodos(user)
       .then((todos: ListOfTodos) => {
         dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
       })
+      .then(() => {
+        console.log('Todos loaded')
+        setLoading(false)
+      })
       .catch((err) => {
-        console.log(err)
+        console.error(err)
       })
   }
 
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
-    TodoService.addTodo(user, title)
-      .then((todos: ListOfTodos) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    const id = crypto.randomUUID()
+    const order = state.todos.length
+    dispatch({ type: TODO_ACTIONS.ADD, payload: { title, id, order } })
+    TodoService.addTodo(user, title, id, order).catch((err) => {
+      console.error(err)
+    })
   }
 
   const handleCheck = async (id: TodoId): Promise<void> => {
-    TodoService.updateTodo(user, id)
-      .then((todos: ListOfTodos) => {
-        dispatch({
-          type: TODO_ACTIONS.UPDATE_LIST,
-          payload: todos,
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch({ type: TODO_ACTIONS.CHECK, payload: id })
+    TodoService.updateTodo(user, id).catch((err) => {
+      console.error(err)
+    })
   }
 
   const handleEditTitle = async (
     id: TodoId,
     title: TodoTitle
   ): Promise<void> => {
-    TodoService.updateTodo(user, id, title)
-      .then((todos: ListOfTodos) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch({ type: TODO_ACTIONS.EDIT_TITLE, payload: { id, title } })
+    TodoService.updateTodo(user, id, title).catch((err) => {
+      console.error(err)
+    })
   }
 
   const handleRemove = async (id: TodoId): Promise<void> => {
-    TodoService.removeTodo(user, id)
-      .then((todos: ListOfTodos) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch({ type: TODO_ACTIONS.REMOVE, payload: id })
+    TodoService.removeTodo(user, id).catch((err) => {
+      console.error(err)
+    })
   }
 
   const onClearCompleted = async (): Promise<void> => {
-    TodoService.clearCompleted(user)
-      .then((todos: ListOfTodos) => {
-        dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: todos })
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    dispatch({ type: TODO_ACTIONS.CLEAR_COMPLETED })
+    TodoService.clearCompleted(user).catch((err) => {
+      console.error(err)
+    })
   }
 
   const handleFilterChange = (filter: FilterValue): void => {
@@ -110,13 +107,14 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     handleInitTodos().catch((err) => {
-      console.log(err)
+      console.error(err)
     })
   }, [user])
 
   const data = {
     state,
     dispatch,
+    loading,
     filteredTodos,
     handleInitTodos,
     handleNewTodo,

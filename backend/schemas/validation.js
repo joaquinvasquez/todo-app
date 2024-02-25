@@ -19,11 +19,7 @@ const todoListSchema = z.array(todoUpdateSchema)
 
 const userSchema = z.string().uuid()
 
-export const validateTodoCreate = (todo) => {
-  return z.object({ title: z.string().min(1).max(50) }).safeParse(todo)
-}
-
-export const validateTodoUpdate = (todo) => {
+export const validateTodo = (todo) => {
   return todoSchema.partial().safeParse(todo)
 }
 

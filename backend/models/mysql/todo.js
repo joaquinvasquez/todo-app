@@ -16,7 +16,7 @@ export class TodoModel {
     return todos
   }
 
-  static createTodo = async ({ user, title }) => {
+  static createTodo = async ({ user, title, id, order }) => {
     const [users] = await dbConnection.query(
       'SELECT BIN_TO_UUID(user_id) `user` FROM users WHERE BIN_TO_UUID(user_id) = ?;',
       [user]
@@ -26,19 +26,10 @@ export class TodoModel {
       error.statusCode = 404
       throw error
     }
-    const [newOrder] = await dbConnection.query(
-      'SELECT MAX(`order`) AS o FROM todos WHERE BIN_TO_UUID(user) = ? LIMIT 1',
-      [user]
-    )
     await dbConnection.query(
-      'INSERT INTO todos (title, `order`, `user`) VALUES (?, ?, UUID_TO_BIN(?));',
-      [title, newOrder[0].o + 1, user]
+      'INSERT INTO todos (title, id, `order`, `user`) VALUES (?, ?, ?, UUID_TO_BIN(?));',
+      [title, id, order, user]
     )
-    const [todos] = await dbConnection.query(
-      'SELECT BIN_TO_UUID(todo_id) id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos WHERE BIN_TO_UUID(`user`) = ? ORDER BY `order`;',
-      [user]
-    )
-    return todos
   }
 
   static updateTodo = async ({ user, id, body }) => {
@@ -62,11 +53,6 @@ export class TodoModel {
         [id, user]
       )
     }
-    const [todos] = await dbConnection.query(
-      'SELECT BIN_TO_UUID(todo_id) id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos WHERE BIN_TO_UUID(`user`) = ? ORDER BY `order`;',
-      [user]
-    )
-    return todos
   }
 
   static deleteTodo = async ({ user, id }) => {
@@ -83,11 +69,6 @@ export class TodoModel {
       'DELETE FROM todos WHERE BIN_TO_UUID(todo_id) = ? AND BIN_TO_UUID(`user`) = ?;',
       [id, user]
     )
-    const [todos] = await dbConnection.query(
-      'SELECT BIN_TO_UUID(todo_id) id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos WHERE BIN_TO_UUID(`user`) = ? ORDER BY `order`;',
-      [user]
-    )
-    return todos
   }
 
   static deleteCompletedTodos = async ({ user }) => {
@@ -104,11 +85,6 @@ export class TodoModel {
       'DELETE FROM todos WHERE BIN_TO_UUID(`user`) = ? AND completed = 1;',
       [user]
     )
-    const [todos] = await dbConnection.query(
-      'SELECT BIN_TO_UUID(todo_id) id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos WHERE BIN_TO_UUID(`user`) = ? ORDER BY `order`;',
-      [user]
-    )
-    return todos
   }
 
   static updateTodosOrder = async ({ user, todosOrder = [] }) => {
@@ -127,10 +103,5 @@ export class TodoModel {
         [todo.order, todo.id, user]
       )
     })
-    const [todos] = await dbConnection.query(
-      'SELECT BIN_TO_UUID(todo_id) id, title, completed, `order`, BIN_TO_UUID(`user`) `user` FROM todos WHERE BIN_TO_UUID(`user`) = ? ORDER BY `order`;',
-      [user]
-    )
-    return todos
   }
 }

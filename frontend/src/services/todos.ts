@@ -9,10 +9,10 @@ const baseURL = 'https://todo-app-jvasquez-dev.onrender.com/todos'
 
 export class TodoService {
   static getTodos = async (user: UserType): Promise<ListOfTodos> => {
+    if (user === '') {
+      return []
+    }
     try {
-      if (user === '') {
-        return []
-      }
       const res = await fetch(`${baseURL}/${user}`)
       const todos: ListOfTodos = await res.json()
       return todos
@@ -24,20 +24,22 @@ export class TodoService {
 
   static addTodo = async (
     user: UserType,
-    title: TodoTitle
-  ): Promise<ListOfTodos> => {
+    title: TodoTitle,
+    id: TodoId,
+    order: number
+  ): Promise<void> => {
     try {
-      const res = await fetch(`${baseURL}/${user}`, {
+      await fetch(`${baseURL}/${user}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id,
           title,
+          order,
         }),
       })
-      const todos: ListOfTodos = await res.json()
-      return todos
     } catch (e) {
       console.log('Error adding todo')
       throw e
@@ -48,7 +50,7 @@ export class TodoService {
     user: UserType,
     id: TodoId,
     title: TodoTitle = ''
-  ): Promise<ListOfTodos> => {
+  ): Promise<void> => {
     try {
       let fetchOptions: RequestInit = {
         method: 'PUT',
@@ -63,38 +65,29 @@ export class TodoService {
           body: JSON.stringify({ title }),
         }
       }
-      const res = await fetch(`${baseURL}/${user}/${id}`, fetchOptions)
-      const todos: ListOfTodos = await res.json()
-      return todos
+      await fetch(`${baseURL}/${user}/${id}`, fetchOptions)
     } catch (e) {
       console.log('Error updating todo')
       throw e
     }
   }
 
-  static removeTodo = async (
-    user: UserType,
-    id: TodoId
-  ): Promise<ListOfTodos> => {
+  static removeTodo = async (user: UserType, id: TodoId): Promise<void> => {
     try {
-      const res = await fetch(`${baseURL}/${user}/${id}`, {
+      await fetch(`${baseURL}/${user}/${id}`, {
         method: 'DELETE',
       })
-      const todos: ListOfTodos = await res.json()
-      return todos
     } catch (e) {
       console.log('Error removing todo')
       throw e
     }
   }
 
-  static clearCompleted = async (user: UserType): Promise<ListOfTodos> => {
+  static clearCompleted = async (user: UserType): Promise<void> => {
     try {
-      const res = await fetch(`${baseURL}/${user}/completed`, {
+      await fetch(`${baseURL}/${user}/completed`, {
         method: 'DELETE',
       })
-      const todos: ListOfTodos = await res.json()
-      return todos
     } catch (e) {
       console.log('Error clearing completed todos')
       throw e
@@ -104,18 +97,16 @@ export class TodoService {
   static updateOrder = async (
     user: UserType,
     todos: ListOfTodos
-  ): Promise<ListOfTodos> => {
+  ): Promise<void> => {
     todos = todos.map((todo, index) => ({ ...todo, order: index }))
     try {
-      const res = await fetch(`${baseURL}/${user}`, {
+      await fetch(`${baseURL}/${user}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(todos),
       })
-      const newTodos: ListOfTodos = await res.json()
-      return newTodos
     } catch (e) {
       console.log('Error updating order')
       throw e

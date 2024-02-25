@@ -12,9 +12,12 @@ const UserProvider: React.FC<Props> = ({ children }) => {
 
   const createUser = async (): Promise<UserType> => {
     try {
-      const res = await fetch('https://todo-app-jvasquez-dev.onrender.com/users', {
-        method: 'POST',
-      })
+      const res = await fetch(
+        'https://todo-app-jvasquez-dev.onrender.com/users',
+        {
+          method: 'POST',
+        }
+      )
       const newUser: UserType = await res.json()
       setUser(newUser)
       localStorage.setItem('user', newUser)
@@ -33,7 +36,7 @@ const UserProvider: React.FC<Props> = ({ children }) => {
       setUser(localUser)
     } else {
       createUser().catch((err) => {
-        console.log(err)
+        console.error(err)
       })
     }
   }, [])

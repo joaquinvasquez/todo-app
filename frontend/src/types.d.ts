@@ -36,6 +36,7 @@ export interface ActionType {
 export interface TodoContextType {
   state: StateType
   dispatch: React.Dispatch<ActionType>
+  loading: boolean
   filteredTodos: ListOfTodos
   handleInitTodos: () => void
   handleRemove: (id: TodoId) => void
