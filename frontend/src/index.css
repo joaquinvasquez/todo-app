@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -8,9 +14,6 @@
 header h1 img {
   height: 58px;
   width: 58px;
-}
-.todo-count strong {
-  font-weight: bold;
 }
 
 /* THEME SWITCH */
@@ -138,12 +141,13 @@ html.dark .footer::before {
   width: 100%;
   background-color: transparent;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 .spinner {
-  height: 5dvw;
-  width: 5dvw;
+  height: 5dvh;
+  width: 5dvh;
   border: thick solid #b83f45;
   border-right-color: transparent;
   border-radius: 50%;
@@ -151,6 +155,11 @@ html.dark .footer::before {
   -o-animation: spinnerAnimation 700ms ease-out infinite;
   -moz-animation: spinnerAnimation 700ms ease-out infinite;
   -webkit-animation: spinnerAnimation 700ms ease-out infinite;
+}
+.spinner-container h2 {
+  color: #b83f45;
+  margin: 3dvh 8dvw;
+  text-align: center;
 }
 /* Animacion spinner */
 @keyframes spinnerAnimation {
