@@ -37,10 +37,9 @@ const Todos: React.FC = () => {
           }}
           key={todo.id}
           id={todo.id}
-          className={`
-          ${todo.completed ? 'completed' : ''}
-          ${isEditing === todo.id ? 'editing' : ''}
-          `}
+          className={`${todo.completed ? 'completed' : ''}${
+            isEditing === todo.id ? 'editing' : ''
+          }`}
           onDoubleClick={() => {
             setIsEditing(todo.id)
           }}
