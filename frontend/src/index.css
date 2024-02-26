@@ -15,6 +15,14 @@ header h1 img {
   height: 58px;
   width: 58px;
 }
+.view label {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 /* THEME SWITCH */
 .theme-switch-container {
