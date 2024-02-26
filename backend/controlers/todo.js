@@ -3,13 +3,12 @@ import {
   validateId,
   validateTodoList,
   validateTodo,
-  validateUser,
 } from '../schemas/validation.js'
 
 export class TodoController {
   static getAllTodos = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       if (!userId.success) {
         res.status(400).json({ error: userId.error })
       }
@@ -22,7 +21,7 @@ export class TodoController {
 
   static createTodo = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       const validBody = validateTodo(req.body)
       if (!userId.success || !validBody.success) {
         res.status(400).json({ error: validBody.error })
@@ -37,7 +36,7 @@ export class TodoController {
 
   static updateTodo = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       const validId = validateId(req.params.id)
       const validBody = validateTodo(req.body)
       if (!userId.success || !validId.success || !validBody.success) {
@@ -56,7 +55,7 @@ export class TodoController {
 
   static deleteTodo = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       const validId = validateId(req.params.id)
       if (!userId.success || !validId.success) {
         res.status(400).json({ error: validId.error })
@@ -73,7 +72,7 @@ export class TodoController {
 
   static deleteCompletedTodos = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       if (!userId.success) {
         res.status(400).json({ error: userId.error })
       }
@@ -86,7 +85,7 @@ export class TodoController {
 
   static updateTodosOrder = async (req, res, next) => {
     try {
-      const userId = validateUser(req.params.user_id)
+      const userId = validateId(req.params.user_id)
       const validBody = validateTodoList(req.body)
       if (!userId.success || !validBody.success) {
         res.status(400).json({ error: validBody.error })

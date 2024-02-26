@@ -27,7 +27,7 @@ export class TodoModel {
       throw error
     }
     await dbConnection.query(
-      'INSERT INTO todos (title, id, `order`, `user`) VALUES (?, ?, ?, UUID_TO_BIN(?));',
+      'INSERT INTO todos (title, todo_id, `order`, `user`) VALUES (?, UUID_TO_BIN(?), ?, UUID_TO_BIN(?));',
       [title, id, order, user]
     )
   }
