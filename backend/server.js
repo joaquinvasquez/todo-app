@@ -29,12 +29,3 @@ app.listen(PORT, () => {
     `Server listening on port ${PORT} // ENV: ${process.env.NODE_ENV}`
   )
 })
-
-setInterval(async () => {
-  await fetch(
-    'https://todo-app-jvasquez-dev.onrender.com/todos/f7a846d3-4b8a-4a1d-946b-df76ec6bd90f'
-  )
-    .then((res) => res.json())
-    .then((data) => console.log('To maintain the server awake', data))
-    .catch((err) => console.log('Error maintaining the server awake', err))
-}, 3600000 * 12) // 12 hours
