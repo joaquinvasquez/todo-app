@@ -59,7 +59,7 @@ const TodoProvider: React.FC<Props> = ({ children }) => {
   const handleNewTodo = async (title: TodoTitle): Promise<void> => {
     const id = crypto.randomUUID()
     const order = state.todos.length
-    dispatch({ type: TODO_ACTIONS.ADD, payload: { title, id, order } })
+    dispatch({ type: TODO_ACTIONS.ADD, payload: { title, id, order, user } })
     try {
       await TodoService.addTodo(user, title, id, order)
     } catch (err) {

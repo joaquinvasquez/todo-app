@@ -21,6 +21,7 @@ export const todoReducer: ReducerType = (state, action) => {
         title: action.payload.title,
         completed: false,
         order: action.payload.order,
+        user: action.payload.user,
       }
       return {
         ...state,
