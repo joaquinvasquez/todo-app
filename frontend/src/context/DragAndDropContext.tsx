@@ -58,12 +58,14 @@ const DADProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const handleDrop = (e: React.DragEvent<HTMLElement>): void => {
+  const handleDrop = async (e: React.DragEvent<HTMLElement>): Promise<void> => {
     e.preventDefault()
     setIsCorrectDrop(true)
-    TodoService.updateOrder(user, state.todos).catch((err) => {
+    try {
+      await TodoService.updateOrder(user, state.todos)
+    } catch (err) {
       console.error(err)
-    })
+    }
   }
 
   const data = {

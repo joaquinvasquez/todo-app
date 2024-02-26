@@ -107,9 +107,9 @@ export class TodoService {
         },
         body: JSON.stringify(todos),
       })
-    } catch (e) {
-      console.log('Error updating order')
-      throw e
+    } catch (err) {
+      console.error('Error updating order')
+      throw err
     }
   }
 }
