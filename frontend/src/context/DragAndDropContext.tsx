@@ -20,14 +20,19 @@ const DADProvider: React.FC<Props> = ({ children }) => {
   const { state, filteredTodos, dispatch } = useContext(TodoContext)
   const { user } = useContext(UserContext)
 
-  const handleOrderChange = (draggingId: TodoId, droppingId: TodoId): void => {
+  const handleOrderChange = (
+    draggingId: TodoId,
+    draggingInId: TodoId
+  ): void => {
     const draggedIndex = state.todos.findIndex((todo) => todo.id === draggingId)
-    const droppedIndex = state.todos.findIndex((todo) => todo.id === droppingId)
+    const draggedInIndex = state.todos.findIndex(
+      (todo) => todo.id === draggingInId
+    )
 
     const newTodos = [...state.todos]
     const draggedTodo = newTodos[draggedIndex]
     newTodos.splice(draggedIndex, 1)
-    newTodos.splice(droppedIndex, 0, draggedTodo)
+    newTodos.splice(draggedInIndex, 0, draggedTodo)
     dispatch({ type: TODO_ACTIONS.UPDATE_LIST, payload: newTodos })
   }
 
@@ -39,14 +44,16 @@ const DADProvider: React.FC<Props> = ({ children }) => {
 
   const handleDragOver = (
     e: React.DragEvent<HTMLLIElement>,
-    draggingId: TodoId
+    draggingInId: TodoId
   ): void => {
     e.preventDefault()
-    if (draggingId !== isDraggingIn && draggingId !== isDragging) {
-      setIsDraggingIn(draggingId)
-      handleOrderChange(isDragging, draggingId)
+    if (draggingInId !== isDraggingIn && draggingInId !== isDragging) {
+      // cuando un elemento se arrastra sobre otro (este otro ejecuta la función)
+      setIsDraggingIn(draggingInId)
+      handleOrderChange(isDragging, draggingInId)
     }
-    if (draggingId !== isDraggingIn && draggingId === isDragging) {
+    if (draggingInId !== isDraggingIn && draggingInId === isDragging) {
+      // cuando se arrastra un elemento sobre sí mismo
       setIsDraggingIn('')
     }
   }
